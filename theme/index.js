@@ -80,6 +80,12 @@ var ThemeGenerator = yeoman.generators.Base.extend({
 				name:    'sass',
 				message: 'Use Sass?',
 				default: true
+			},
+			{
+				type:    'confirm',
+				name:    'browsersync',
+				message: 'Use Browsersync?',
+				default: false
 			}
 		];
 		// gather initial settings
@@ -113,6 +119,20 @@ var ThemeGenerator = yeoman.generators.Base.extend({
 			this.opts.autoprefixer = props.autoprefixer;
 			done();
 		}.bind( this ));
+	},
+
+	localSetup: function() {
+		if ( this.opts.browsersync ) {
+			var done = this.async();
+			this.prompt( [{
+				name:   'localdev',
+				message: 'Local Dev URL'
+			}],
+			function( props ){
+				this.opts.localSetup = props.localSetup;
+				done();
+			}.bind( this ));
+		}
 	},
 
 	theme: function() {
